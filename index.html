@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSR Trades | Official Hub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0A0C10;
+            --bg-elevated: #12151C;
+            --bg-row-hover: #171B24;
+            --ink: #ECEEF2;
+            --ink-muted: #7C8394;
+            --ink-faint: #454B59;
+            --amber: #FFB020;
+            --amber-dim: rgba(255, 176, 32, 0.14);
+            --up: #34D399;
+            --down: #F87171;
+            --hairline: rgba(255, 255, 255, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(var(--hairline) 1px, transparent 1px),
+                linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+            background-size: 100% 42px, 42px 100%;
+            background-position: center top;
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 0 16px 40px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            animation: fadeIn 0.7s ease-out;
+        }
+
+        /* ---------- Ticker ---------- */
+        .ticker-wrap {
+            overflow: hidden;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--hairline);
+            margin: 0 -16px 0;
+            padding: 9px 0;
+        }
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: scroll 26s linear infinite;
+            white-space: nowrap;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+        .ticker-track span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            letter-spacing: 0.06em;
+            color: var(--ink-muted);
+            padding: 0 22px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ticker-track span b { color: var(--amber); font-weight: 500; }
+        .ticker-track .up { color: var(--up); }
+
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ---------- Language switch ---------- */
+        .lang-bar {
+            display: flex;
+            justify-content: center;
+            margin: 16px 0 22px;
+        }
+        .lang-switch {
+            display: inline-flex;
+            background: var(--bg-elevated);
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            padding: 3px;
+            gap: 2px;
+        }
+        .lang-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--ink-faint);
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 14px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .lang-btn.active {
+            background: var(--amber-dim);
+            color: var(--amber);
+        }
+        .lang-btn:not(.active):hover {
+            color: var(--ink-muted);
+        }
+
+        /* ---------- Profile ---------- */
+        .profile-container {
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .avatar-wrap {
+            position: relative;
+            width: 104px;
+            height: 104px;
+            margin: 0 auto 18px;
+        }
+
+        .profile-img {
+            width: 104px;
+            height: 104px;
+            border-radius: 50%;
+            border: 2px solid var(--hairline);
+            object-fit: cover;
+            display: block;
+        }
+
+        .status-dot {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--up);
+            border: 3px solid var(--bg);
+        }
+
+        .eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 25px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: var(--ink-muted);
+            font-size: 13.5px;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .bio {
+            font-size: 13px;
+            color: var(--ink-muted);
+            max-width: 88%;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ---------- Stats row ---------- */
+        .stats-row {
+            display: flex;
+            border-top: 1px solid var(--hairline);
+            border-bottom: 1px solid var(--hairline);
+            margin: 22px 0 28px;
+        }
+        .stat {
+            flex: 1;
+            text-align: center;
+            padding: 14px 4px;
+            position: relative;
+        }
+        .stat:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 14px;
+            bottom: 14px;
+            width: 1px;
+            background: var(--hairline);
+        }
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+        .stat-label {
+            font-size: 10.5px;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+        }
+
+        /* ---------- Links ---------- */
+        .links-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .link-row {
+            background-color: var(--bg-elevated);
+            border: 1px solid var(--hairline);
+            border-radius: 10px;
+            padding: 15px 16px;
+            text-decoration: none;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+        }
+
+        .link-row:hover {
+            background-color: var(--bg-row-hover);
+            border-color: var(--ink-faint);
+            transform: translateX(2px);
+        }
+
+        .link-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            color: var(--ink-faint);
+            width: 74px;
+            flex-shrink: 0;
+        }
+
+        .link-label {
+            font-weight: 500;
+            font-size: 14.5px;
+            flex: 1;
+        }
+
+        .link-arrow {
+            color: var(--ink-faint);
+            font-size: 14px;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .link-row:hover .link-arrow {
+            transform: translateX(3px);
+            color: var(--ink-muted);
+        }
+
+        /* Featured row */
+        .link-row.featured {
+            border-color: rgba(255, 176, 32, 0.35);
+            background: linear-gradient(135deg, var(--bg-elevated) 0%, #1A1508 100%);
+        }
+        .link-row.featured .link-tag { color: var(--amber); }
+        .link-row.featured:hover {
+            border-color: var(--amber);
+            box-shadow: 0 0 12px rgba(255, 176, 32, 0.2);
+        }
+        .link-row.featured .link-arrow { color: var(--amber); }
+
+        /* ---------- Disclaimer ---------- */
+        .disclaimer {
+            margin-top: 26px;
+            padding: 14px 16px;
+            border: 1px solid var(--hairline);
+            border-radius: 10px;
+            font-size: 11px;
+            line-height: 1.6;
+            color: var(--ink-faint);
+        }
+
+        /* ---------- Footer ---------- */
+        footer {
+            margin-top: 24px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--ink-faint);
+            letter-spacing: 0.08em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ticker-track { animation: none; }
+            .container { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Ticker şeridi: imza öğesi -->
+        <div class="ticker-wrap">
+            <div class="ticker-track" id="tickerTrack">
+                <!-- JS ile dolduruluyor -->
+            </div>
+        </div>
+
+        <!-- Dil seçici -->
+        <div class="lang-bar">
+            <div class="lang-switch">
+                <button type="button" class="lang-btn active" data-lang="tr" onclick="setLang('tr')">TR</button>
+                <button type="button" class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+            </div>
+        </div>
+
+        <!-- Profil -->
+        <div class="profile-container">
+            <div class="avatar-wrap">
+                <img class="profile-img" src="img/pp.jpeg" alt="MSR Trades">
+                <div class="status-dot"></div>
+            </div>
+            <div class="eyebrow" data-i18n="eyebrow">Funded Trader · Risk Manager</div>
+            <h1>MSR Trades</h1>
+            <div class="subtitle" data-i18n="subtitle">Disiplinli bir trading yolculuğunu paylaşıyorum</div>
+            <p class="bio" data-i18n="bio">Risk yönetimi, tek gerçek kutsal kâsedir. Süreçleri, hataları ve sonuçları şeffafça paylaşıyorum.</p>
+        </div>
+
+        <!-- Stat satırı -->
+        <div class="stats-row">
+            <div class="stat">
+                <div class="stat-value">$200K+</div>
+                <div class="stat-label" data-i18n="stat1">Fon Kapasitesi</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">%90</div>
+                <div class="stat-label" data-i18n="stat2">Kâr Payı</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" data-i18n="stat3val">∞</div>
+                <div class="stat-label" data-i18n="stat3">Konumdan Bağımsız Gelir</div>
+            </div>
+        </div>
+
+        <!-- Linkler -->
+        <nav class="links-wrapper" aria-label="Profil linkleri">
+
+            <!-- 1. FTMO Ortaklık Linki (Öne Çıkan) -->
+            <!-- Not: FTMO ortaklık panelinden özel affiliate linkini aldığında buradaki adresi onunla değiştirirsin -->
+            <a href="https://ftmo.com/en/" target="_blank" class="link-row featured">
+                <span class="link-tag" data-i18n="tag1">[FON]</span>
+                <span class="link-label" data-i18n="label1">$200K'a Kadar Sermaye Yönet (FTMO)</span>
+                <span class="link-arrow">→</span>
+            </a>
+
+            <!-- 2. Telegram Doğrudan İletişim (Özel Mesaj) -->
+            <a href="https://t.me/mmusasr" target="_blank" class="link-row">
+                <span class="link-tag" data-i18n="tag2">[İLETİŞİM]</span>
+                <span class="link-label" data-i18n="label2">Telegram Üzerinden Birebir Destek</span>
+                <span class="link-arrow">→</span>
+            </a>
+
+            <!-- 3. Instagram Profili -->
+            <a href="https://www.instagram.com/mmusa.sr/" target="_blank" class="link-row">
+                <span class="link-tag" data-i18n="tag3">[SOSYAL]</span>
+                <span class="link-label" data-i18n="label3">Instagram Topluluğu</span>
+                <span class="link-arrow">→</span>
+            </a>
+
+        </nav>
+
+        <!-- Risk uyarısı -->
+        <div class="disclaimer" data-i18n="disclaimer">
+            ⚠ Trading yüksek risk içerir. Geçmiş performans gelecekteki sonuçların garantisi değildir. Paylaşılan içerikler yatırım tavsiyesi niteliği taşımaz.
+        </div>
+
+        <footer>© 2026 MSR TRADES · ALL RIGHTS RESERVED</footer>
+
+    </div>
+
+    <script>
+        const translations = {
+            tr: {
+                eyebrow: "Funded Trader · Risk Manager",
+                subtitle: "Disiplinli bir trading yolculuğunu paylaşıyorum",
+                bio: "Risk yönetimi, tek gerçek kutsal kâsedir. Süreçleri, hataları ve sonuçları şeffafça paylaşıyorum.",
+                stat1: "Fon Kapasitesi",
+                stat2: "Kâr Payı",
+                stat3: "Konumdan Bağımsız Gelir",
+                stat3val: "∞",
+                tag1: "[FON]",
+                label1: "$200K'a Kadar Sermaye Yönet (FTMO)",
+                tag2: "[İLETİŞİM]",
+                label2: "Telegram Üzerinden Birebir Destek",
+                tag3: "[SOSYAL]",
+                label3: "Instagram Topluluğu",
+                disclaimer: "⚠ Trading yüksek risk içerir. Geçmiş performans gelecekteki sonuçların garantisi değildir. Paylaşılan içerikler yatırım tavsiyesi niteliği taşımaz.",
+                ticker: [
+                    ["FTMO", " CHALLENGE ", "▲ AKTİF"],
+                    ["", "RİSK YÖNETİMİ %1 MAX DRAWDOWN", ""],
+                    ["", "FONLU HESAP $200K'A KADAR", ""],
+                    ["", "DİSİPLİN > DUYGU", ""]
+                ]
+            },
+            en: {
+                eyebrow: "Funded Trader · Risk Manager",
+                subtitle: "Documenting a disciplined trading journey",
+                bio: "Risk management is the only holy grail. I share the process, the mistakes, and the results — openly.",
+                stat1: "Capital Managed",
+                stat2: "Profit Split",
+                stat3: "Location-Independent Income",
+                stat3val: "∞",
+                tag1: "[FUND]",
+                label1: "Manage Up to $200K Capital (FTMO)",
+                tag2: "[CONTACT]",
+                label2: "1-on-1 Support via Telegram",
+                tag3: "[SOCIAL]",
+                label3: "Instagram Community",
+                disclaimer: "⚠ Trading involves substantial risk. Past performance is not indicative of future results. Content shared here does not constitute investment advice.",
+                ticker: [
+                    ["FTMO", " CHALLENGE ", "▲ ACTIVE"],
+                    ["", "RISK MANAGEMENT 1% MAX DRAWDOWN", ""],
+                    ["", "FUNDED ACCOUNT UP TO $200K", ""],
+                    ["", "DISCIPLINE > EMOTION", ""]
+                ]
+            }
+        };
+
+        function renderTicker(lang) {
+            const track = document.getElementById('tickerTrack');
+            const items = translations[lang].ticker;
+            let html = '';
+            // duplicate the set twice for seamless scroll
+            for (let rep = 0; rep < 2; rep++) {
+                items.forEach(([bold, text, upTag]) => {
+                    html += '<span>';
+                    if (bold) html += '<b>' + bold + '</b>';
+                    html += text;
+                    if (upTag) html += '<span class="up">' + upTag + '</span>';
+                    html += '</span>';
+                });
+            }
+            track.innerHTML = html;
+
+            // Reduced motion: no animation, no width math needed
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                track.style.animation = 'none';
+                return;
+            }
+
+            // Recalculate speed so different-length languages scroll at the
+            // same visual pace instead of a fixed 26s regardless of width.
+            track.style.animation = 'none';
+            void track.offsetWidth; // force reflow before measuring
+            const halfWidth = track.scrollWidth / 2;
+            const pxPerSecond = 55;
+            const duration = Math.max(halfWidth / pxPerSecond, 8);
+            track.style.animation = `scroll ${duration}s linear infinite`;
+        }
+
+        function setLang(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.textContent = translations[lang][key];
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+            renderTicker(lang);
+        }
+
+        // Başlangıç dili
+        setLang('tr');
+    </script>
+
+</body>
+</html>
