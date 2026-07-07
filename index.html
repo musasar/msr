@@ -219,6 +219,36 @@
             margin-top: 4px;
         }
 
+        /* ---------- Banner (affiliate ad) ---------- */
+        .banner-block {
+            display: block;
+            border: 1px solid rgba(255, 176, 32, 0.35);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 28px;
+            background: var(--bg-elevated);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+        }
+        .banner-block:hover {
+            border-color: var(--amber);
+            box-shadow: 0 0 12px rgba(255, 176, 32, 0.2);
+            transform: translateY(-1px);
+        }
+        .banner-block img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .banner-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            text-align: center;
+            margin: -18px 0 28px;
+        }
+
         /* ---------- Links ---------- */
         .links-wrapper {
             display: flex;
@@ -361,12 +391,21 @@
             </div>
         </div>
 
+        <!-- FTMO Affiliate Banner: picture chooses the best-fitting creative per viewport -->
+        <a class="banner-block" href="https://trader.ftmo.com/?affiliates=mAZiScGebdRaIqEpMAiN" target="_blank" rel="noopener sponsored">
+            <picture>
+                <source media="(min-width: 900px)" srcset="https://cdn.ftmo.com/aff-banner.1200x628">
+                <source media="(min-width: 560px)" srcset="https://cdn.ftmo.com/aff-banner.728x90">
+                <source media="(min-width: 380px)" srcset="https://cdn.ftmo.com/aff-banner.320x250">
+                <img src="https://cdn.ftmo.com/aff-banner.160x600" alt="FTMO.com - For serious traders" loading="lazy">
+            </picture>
+        </a>
+
         <!-- Linkler -->
         <nav class="links-wrapper" aria-label="Profil linkleri">
 
             <!-- 1. FTMO Ortaklık Linki (Öne Çıkan) -->
-            <!-- Not: FTMO ortaklık panelinden özel affiliate linkini aldığında buradaki adresi onunla değiştirirsin -->
-            <a href="https://ftmo.com/en/" target="_blank" class="link-row featured">
+            <a href="https://trader.ftmo.com/?affiliates=mAZiScGebdRaIqEpMAiN" target="_blank" rel="noopener sponsored" class="link-row featured">
                 <span class="link-tag" data-i18n="tag1">[FON]</span>
                 <span class="link-label" data-i18n="label1">$200K'a Kadar Sermaye Yönet (FTMO)</span>
                 <span class="link-arrow">→</span>
