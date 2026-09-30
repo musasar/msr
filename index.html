@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Official Hub</title>
+    <title>MSR · Official Hub</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -349,7 +349,7 @@
 
     <div class="container">
 
-        <!-- Ticker şeridi: imza öğesi -->
+        <!-- Ticker şeridi -->
         <div class="ticker-wrap">
             <div class="ticker-track" id="tickerTrack">
                 <!-- JS ile dolduruluyor -->
@@ -391,7 +391,7 @@
             </div>
         </div>
 
-        <!-- FTMO Banner -->
+        <!-- FTMO Responsive Banner (tek doğru picture kullanımı) -->
         <a class="banner-block" href="https://join.ftmo.com/mAZiScGebdRaIqEpMAiN" target="_blank" rel="noopener sponsored">
             <picture>
                 <source media="(min-width: 900px)" srcset="https://cdn.ftmo.com/aff-banner.1200x628">
@@ -411,7 +411,7 @@
             <span class="link-arrow">→</span>
         </a>
 
-            <!-- 2. Telegram Doğrudan İletişim (Özel Mesaj) -->
+            <!-- 2. Telegram Doğrudan İletişim -->
             <a href="https://t.me/mmusasr" target="_blank" class="link-row">
                 <span class="link-tag" data-i18n="tag2">[İLETİŞİM]</span>
                 <span class="link-label" data-i18n="label2">Telegram Üzerinden Birebir Destek</span>
@@ -488,7 +488,6 @@
             const track = document.getElementById('tickerTrack');
             const items = translations[lang].ticker;
             let html = '';
-            // duplicate the set twice for seamless scroll
             for (let rep = 0; rep < 2; rep++) {
                 items.forEach(([bold, text, upTag]) => {
                     html += '<span>';
@@ -500,16 +499,13 @@
             }
             track.innerHTML = html;
 
-            // Reduced motion: no animation, no width math needed
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 track.style.animation = 'none';
                 return;
             }
 
-            // Recalculate speed so different-length languages scroll at the
-            // same visual pace instead of a fixed 26s regardless of width.
             track.style.animation = 'none';
-            void track.offsetWidth; // force reflow before measuring
+            void track.offsetWidth;
             const halfWidth = track.scrollWidth / 2;
             const pxPerSecond = 55;
             const duration = Math.max(halfWidth / pxPerSecond, 8);
